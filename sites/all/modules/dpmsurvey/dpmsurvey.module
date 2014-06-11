@@ -1,0 +1,223 @@
+<?php
+// $Id: dpmsurvey.module,v 1
+
+function dpmsurvey_perm() {
+  return array(
+    'access survey form',
+    'access survey reports',
+	'access survey builder',
+  );
+}
+ 
+/* menu for this module */
+function dpmsurvey_menu() {
+    $items = array();
+   
+    //Link to the test_module admin page:
+    $items['admin/content/dpm_surveys'] = array(
+        'title' => 'DPM Surveys',
+        'description' => 'Manage DPM Surveys',
+        'page callback' => 'dpmsurvey_overview',
+        'access arguments' => array('administer dpmsurvey'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['admin/content/dpm_surveys/list'] = array(
+        'title' => 'DPM Surveys',
+        'description' => 'Manage DPM Surveys',
+        'page callback' => 'dpmsurvey_list',
+        'access arguments' => array('administer dpmsurvey'),
+        'type' => MENU_LOCAL_TASK,
+		'weight' => 0,
+    );
+	$items['admin/content/dpm_surveys/edit/%'] = array(
+		'title' => t('Edit DPM Survey Form'),
+		'description' => 'Edit Survey',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('dpmsurvey_edit_form', 4),
+		'access arguments' => array('administer dpmsurvey'),
+		'type' => MENU_LOCAL_TASK,
+ 	);
+	$items['admin/content/dpm_surveys/add'] = array(
+		'title' => t('Add DPM Survey Form'),
+		'description' => 'Add Survey',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('dpmsurvey_add_form', 4),
+		'access arguments' => array('administer dpmsurvey'),
+		'type' => MENU_LOCAL_TASK,
+		'weight' => 1,
+ 	);
+	$items['admin/content/dpm_surveys/new'] = array(
+		'title' => t('New DPM Survey'),
+		'description' => 'Add Survey',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('dpmsurvey_new_form', 4),
+		'access arguments' => array('administer dpmsurvey'),
+		'type' => MENU_LOCAL_TASK,
+		'weight' => 2,
+ 	);
+    return $items;
+}
+
+function dpmsurvey_overview() {
+	$content = 'DPM survey administration';
+	return $content;
+}
+
+
+function dpmsurvey_list() {
+	$page_content = '<table>';
+   	$get_surveys = db_query('select * from {tblSurvey}');
+	while($value = db_fetch_array($get_surveys)) { // create data array
+		$data[] = $value; // main data array
+	}
+	for ($x=0;$x<count($data);$x++) {
+		$page_content .= '<tr><td><a href="/admin/content/dpm_surveys/edit/'.$data[$x]['survey_id'].'">'.$data[$x]['survey_project'].'</a></td><td>'.$data[$x]['survey_startdate'].'</td><td>'.$data[$x]['survey_password'].'</td></tr>';
+	}
+	$page_content .= '</table>';
+	   
+    return $page_content;
+}
+
+
+function dpmsurvey_edit_form($form_state, $variable) {
+	$result = db_query('select * from {tblSurvey} where survey_id = %d',$variable);
+	while($value = db_fetch_array($result)) { // create data array
+		$data[] = $value; // main data array
+	}
+	$form['survey_project'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Survey Project'),
+        '#default_value' => $data[0]['survey_project'],
+    );
+	$form['survey_startdate'] = array(
+        '#type' => 'date_popup',
+        '#title' => t('Survey Startdate'),
+        '#default_value' => $data[0]['survey_startdate'],
+    );
+	$form['survey_password'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Survey Password'),
+        '#default_value' => $data[0]['survey_password'],
+    );
+   
+    //Submit button:
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Save Message'),
+    );
+   
+    return $form;
+}
+
+
+function dpmsurvey_edit_form_validate($form, &$form_state) {
+    $test_module_message = $form_state['values']['survey_project'];
+    if (isset($test_module_message)) {
+        if (!is_string($test_module_message) || $test_module_message == '') {
+            form_set_error('test_module_message', t('Please enter a test message.'));
+        }
+    }
+}
+
+function dpmsurvey_edit_form_submit($form, &$form_state) {
+    $exe_query = db_query("UPDATE {tblSurvey} set survey_project = '%s', survey_startdate = '%s', survey_password = '%s'", $form_state['values']['survey_project'],$form_state['values']['survey_startdate'],$form_state['values']['survey_password'] );
+	      
+    $form_state['redirect'] = 'admin/content/dpm_surveys';
+}
+
+function set_pjlist() {
+	$pjarray = array();
+	$sql = "select n.nid, p.field_project_number_value from node n inner join content_type_projects p on p.nid = n.nid where p.field_project_number_value is not null";
+	$exe_query = db_query($sql);
+	while($value = db_fetch_array($exe_query)) { // create data array
+		$data[] = $value; // main data array
+	}
+	for ($x=0;$x<count($data);$x++) {
+		$pjarray[$data[$x]['nid']] = $data[$x]['field_project_number_value'];
+	}
+	return $pjarray;
+}
+
+function dpmsurvey_add_form() {
+	$form['pjlist'] = array(
+        '#type' => 'value',
+		'#value' => set_pjlist(),
+    );
+	$form['survey_project'] = array(
+		'#type' => 'select',
+		'#title' => 'Survey Project',
+		'#options' => $form['pjlist']['#value'],
+	);
+	$form['survey_startdate'] = array(
+        '#type' => 'date_popup',
+        '#title' => t('Survey Startdate'),
+    );
+	$form['survey_password'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Survey Password'),
+    );
+   
+    //Submit button:
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Save Message'),
+    );
+   
+    return $form;
+}
+
+function dpmsurvey_add_form_validate($form, &$form_state) {
+    if ($form_state['values']['survey_project'] == '') {
+		form_set_error('survey_project',t('You need to select a project number'));
+	}
+}
+
+function dpmsurvey_add_form_submit($form, &$form_state) {
+	$sp_key = $form_state['values']['survey_project'];
+	$sp_value = $form_state['values']['pjlist'][$sp_key];
+    $exe_query = db_query("INSERT INTO {tblSurvey} (survey_project, survey_startdate, survey_password) VALUES('%s','%s','%s')", $sp_value,$form_state['values']['survey_startdate'],$form_state['values']['survey_password']);
+    $form_state['redirect'] = 'admin/content/dpm_surveys';
+}
+
+function dpmsurvey_new_form($form_state, $variable) {
+	$sql = "select survey_project, u.name, pf.title, pv.value from tblSurvey s inner join content_type_projects cp on s.survey_project_nid = cp.nid inner join content_field_project_manager pm on pm.nid = cp.nid inner join users u on u.uid = pm.field_project_manager_uid inner join profile_values pv on pv.uid = u.uid inner join profile_fields pf on pf.fid = pv.fid where cp.nid = %d and pf.title = 'Job Title'";
+	$exe_query = db_query($sql,$variable);
+	while($value = db_fetch_array($exe_query)) { // create data array
+		$data[] = $value; // main data array
+	}
+	$ratings_list = array("Pre-Construction and Planning Skills","Construction Administration Skills","Relocation Management Skills","Overall Technical Knowledge and Competency","Budget and Schedule Management","Professionalism","Leadership and Team Building","Verbal Communication Skills","Written Communication Skills","Level and Style of Communication","Ability to Address Conflict and Challenge","Adaptability to Your Project Requirements","Organizational Skills","Delegation","Problem Solving Abilities","Commitment to Quality","Overall Value Provided");
+
+	$form['pm_rating'] = array(
+        '#type' => 'value',
+		'#value' => array(1=>'1',2=>'2',3=>'3',4=>'4',5=>'5'),
+    );
+	/*
+	for ($x=0;$x<count($data);$x++) {
+		$form['project_manager_'.$x] = array(
+			'#type' => 'fieldset',
+			'#title' => t($data[$x]['name']),
+			'#collapsible' => FALSE,
+		);
+		for ($y=0;$y<count($ratings_list);$y++) {
+			$form['pm_rating_'.$x.'_q'.$y] = array(
+				'#type' => 'radios',
+				'#title' => $ratings_list[$y],
+				'#options' => $form['pm_rating']['#value'],
+			);
+		}
+	}
+	*/
+	$form['test_field'] = array(
+		'#type' => 'textfield',
+		'#title' => 'Test Field',
+		'#default_value' => count($data),
+	);
+	//Submit button:
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Save Message'),
+    );
+	return $form;
+}
+
+

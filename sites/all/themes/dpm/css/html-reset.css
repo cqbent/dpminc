@@ -1,0 +1,488 @@
+/* $Id: html-reset.css,v 1.6.2.2 2010/06/26 15:36:03 johnalbin Exp $ */
+
+/**
+ * @file
+ * HTML Element Styling
+ *
+ * Ok, I admit it. I fooled you. This isn't a "reset" stylesheet. Instead this
+ * is the place where you should set (not reset) the default styling for all
+ * HTML elements.
+ *
+ * @see http://meiert.com/en/blog/20080419/reset-style-sheets-are-bad/
+ * @see http://snook.ca/archives/html_and_css/no_css_reset/
+ */
+
+
+/*
+ * Fonts
+ *
+ * Our font size and line height declarations are based on the following ALA
+ * article:
+ *   http://www.alistapart.com/articles/howtosizetextincss
+ *
+ * All modern browsrs use a 16px default font size. Specifying the font-size
+ * and line-height in ems (relative to the 16px default font) allows the user
+ * to resize the font in the browser and produces the most consistent results
+ * across different browsers.
+ */
+body {
+  font-size: 100%; /* Fixes exaggerated text resizing in IE6 and IE7 */
+  color:#fff;
+}
+
+#skip-link,
+#page {
+  /*
+   * To use a 12px font size on the page, delete the 14px declarations.
+   * to use a 14px font size on the page, delete the 12px declarations.
+   */
+
+
+  /* Use a 14px base font size with a 18px line height */
+  font-size: 0.875em; /* 16px x .875 = 14px */
+  line-height: 1.286em; /* 14px x 1.286 = 18px */
+}
+
+body,
+caption,
+th,
+td,
+input,
+textarea,
+select,
+option,
+legend,
+fieldset {
+  /* The following font family declarations are based on the Microsoft core web
+   * fonts which are common fonts available on most computer systems. The DejaVu
+   * fonts are commonly available on Linux systems where the MS fonts are less
+   * common. Tahoma and Helvetica are also widely available.
+   *
+   * A user's web browser will look at the comma-separated list and will
+   * attempt to use each font in turn until it finds one that is available
+   * on the user's computer. The final "generic" font (sans-serif or serif)
+   * hints at what type of font to use if the web browser doesn't find any
+   * of the fonts in the list.
+
+  font-family: "Times New Roman", Times, Georgia, "DejaVu Serif", serif;
+  font-family: Times, "Times New Roman", Georgia, "DejaVu Serif", serif;
+  font-family: Georgia, "Times New Roman", "DejaVu Serif", serif;
+
+  font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
+  font-family: Tahoma, Verdana, "DejaVu Sans", sans-serif;
+  font-family: Helvetica, Arial, "Nimbus Sans L", sans-serif;
+  font-family: Arial, Helvetica, "Nimbus Sans L", sans-serif;
+
+  font-family: "Courier New", "DejaVu Sans Mono", monospace;
+
+   */
+
+  font-family: BellGothic-Roman, sans-serif;
+}
+
+pre,
+code {
+  font-size: 1.1em; /* Monospace fonts can be hard to read */
+  font-family: "Courier New", "DejaVu Sans Mono", monospace;
+}
+
+/*
+ * Headings
+ */
+h1 {
+  font-size: 2em;
+  line-height: 1.3em;
+  margin-top: 0;
+  margin-bottom: 0.5em; /* 0.5em is equavalent to 1em in the page's base font.
+                           Remember, a margin specified in ems is relative to
+                           the element's font-size, not to the pages' base
+                           font size. So, for example, if we want a 1em margin
+                           (relative to the base font), we have to divide that
+                           length by the element's font-size:
+                           1em / 2em = 0.5em */
+}
+
+h2 {
+  font-size: 1.5em;
+  line-height: 1.3em;
+  margin-top: 0.667em; /* Equivalent to 1em in the page's base font: 1 / 1.5 = 0.667em */
+  margin-bottom: 0.667em;
+}
+
+h3 {
+  font-size: 1.3em;
+  line-height: 1.3em;
+  margin-top: 0.769em; /* Equivalent to 1em in the page's base font: 1 / 1.3 = 0.769 */
+  margin-bottom: 0.769em;
+}
+
+h4,
+h5,
+h6 {
+  font-size: 1.1em;
+  line-height: 1.3em;
+  margin-top: 0.909em; /* Equivalent to 1em in the page's base font: 1 / 1.1 = 0.909 */
+  margin-bottom: 0.909em;
+}
+
+/*
+ * Block-level elements
+ */
+p,
+ul,
+ol,
+dl,
+pre,
+table,
+fieldset {
+  margin: 1em 0;
+}
+
+blockquote {
+  margin: 1em 2em;
+}
+
+/*
+ * Lists
+ *
+ * We need to standardize the list item indentation.
+ */
+ul,
+ol {
+  margin-left: 0;
+  padding-left: 2em; /* LTR */
+}
+
+.block ul,
+.item-list ul /* Drupal overrides */ {
+  margin: 1em 0;
+  padding: 0 0 0 2em; /* LTR */
+}
+
+ul ul, ul ol,
+ol ol, ol ul,
+.block ul ul, .block ul ol,
+.block ol ol, .block ol ul,
+.item-list ul ul, .item-list ul ol,
+.item-list ol ol, .item-list ol ul {
+  margin: 0;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+}
+
+.item-list ul li /* Drupal override */ {
+  margin: 0;
+  padding: 0;
+  list-style: inherit;
+}
+
+ul.menu li,
+li.expanded,
+li.collapsed,
+li.leaf /* Drupal override */ {
+  margin: 0;
+  padding: 0;
+}
+
+ul          { list-style-type: disc; }
+ul ul       { list-style-type: circle; }
+ul ul ul    { list-style-type: square; }
+ul ul ul ul { list-style-type: circle; }
+ol          { list-style-type: decimal; }
+ol ol       { list-style-type: lower-alpha; }
+ol ol ol    { list-style-type: decimal; }
+
+dt {
+  margin: 0;
+  padding: 0;
+}
+
+dd {
+  margin: 0 0 0 2em;
+  padding: 0;
+}
+
+/*
+ * Links
+ *
+ * The order of link states are based on Eric Meyer's article:
+ * http://meyerweb.com/eric/thoughts/2007/06/11/who-ordered-the-link-states
+ */
+a { color: #953635; }
+
+/*
+ * Tables
+ *
+ * Drupal provides table styling which is only useful for its admin section
+ * forms, so we override this default CSS. (We set it back in forms.css.)
+ */
+table {
+  border-collapse: collapse;
+  /* width: 100%; */ /* Prevent cramped-looking tables */
+}
+
+th,
+thead th,
+tbody th {
+  text-align: left; /* LTR */
+  padding: 0;
+  border-bottom: none;
+}
+
+tbody {
+  border-top: none;
+  color:#444;
+}
+
+/*
+ * Abbreviations
+ */
+abbr {
+  border-bottom: 1px dotted #666;
+  cursor: help;
+  white-space: nowrap;
+}
+
+abbr.created /* Date-based "abbreviations" show computer-friendly timestamps which are not human-friendly. */ {
+  border: none;
+  cursor: auto;
+  white-space: normal;
+}
+
+/*
+ * Images
+ */
+img {
+  border: 0;
+}
+
+/*
+ * Horizontal rules
+ */
+hr {
+  height: 1px;
+  border: 1px solid #666;
+}
+
+/*
+ * Forms
+ */
+form {
+  margin: 0;
+  padding: 0;
+}
+
+fieldset {
+  margin: 1em 0;
+  padding: 0.5em;
+}
+
+
+/* DPM CUSTOM CSS */
+strong, b { font-family:BellGothic-Black; font-weight:normal; font-size:.9em; }
+h1, h2, h3 { font-weight:normal; }
+/* body.not-front { background-color: #C0C0C0; background-image: none; } */
+.front #page-wrapper, .not-front #page-wrapper { width:1020px; border: 10px #fff solid; padding:0; margin: 10px auto; }
+#header { 
+    padding-bottom:0px; position:relative; /* height:185px;  */ height:125px; z-index:10;  
+    background-color: #C0C0C0;
+    padding: 10px 20px;
+    border-bottom: 10px #FFF solid;
+}
+#main-wrapper { 
+    background-color: #F3F3F3;
+    margin: 0;
+    padding: 20px;
+    color: #5C5C5C; border-bottom:10px #fff solid;
+}
+.front #main-wrapper { background-color: #000; padding: 20px 40px; }
+#main-wrapper #content .section { padding-right:20px; }
+#content { min-height:400px; }
+a.bk-link {  color:#fff; background-color:#953635; padding:2px 4px; text-decoration:none;  }
+#logo img { max-width: 260px; }
+#block-block-2 { margin: 0; }
+/* primary links */
+#block-menu-primary-links { clear:both }
+#block-menu-primary-links ul { margin:0px; padding:0px; clear:none; }
+#block-menu-primary-links li.leaf, #block-menu-primary-links li.expanded, #block-menu-primary-links li.collapsed 
+	{ float:left; margin-right:10px; list-style:none; position:relative; }
+#block-menu-primary-links li ul.menu { position:absolute; float:none; }
+li.collapsed, li.expanded, li.leaf { list-style-image:none; list-style-type:none; width:auto; }
+
+/* secondary links */
+#block-menu-secondary-links { position:absolute; top:48px; right:0px; width:237px;    }
+#block-menu-secondary-links ul { margin:0px; padding:0px 0px 10px 0px;  }
+#block-menu-secondary-links li a:after { content: '>'; height: 20px; margin-left:5px; width: 10px; }
+#block-menu-secondary-links li li a:after { display:none;  }
+#block-menu-secondary-links ul ul { display:none;  }
+#block-menu-secondary-links:hover ul ul { display:block; font-size:12px; }
+#block-menu-secondary-links li.leaf { float:left; margin-right:4px; list-style:none; padding:2px 3px; background-color:#953635; }
+#block-menu-secondary-links li.leaf.last { margin-right:0px; }
+#block-menu-secondary-links a { text-decoration:none;  }
+#block-menu-secondary-links li.leaf a { color:#fff; }
+
+/* search */
+#block-search-0 { position:absolute; bottom: 2px; right:20px; }
+.block-search form { height:28px; background-color:#fff; }
+.block-search .form-item { margin:0px; }
+.block-search .form-text { width:172px; color:#acacac; font-size:14px; font-family:BellGothic-Roman; border:none; vertical-align:top; height:28px; padding:0px 5px; }
+
+/* footer lnks */
+#footer { 
+    background-color:#C0C0C0; padding:20px; 
+}
+#footer p { margin:0; }
+#footer .section { position: relative; }
+#footer, #footer a { color:#953635; text-decoration:none; }
+#block-menu-menu-footer-links ul { margin:0px; padding:0px 0px 10px 0px;  }
+#block-menu-menu-footer-links li.leaf { float:left; padding-right:5px; padding-left:5px; list-style:none; border-right:1px #9f9f9f solid;  }
+#block-menu-menu-footer-links li.first { padding-left:0px; }
+#block-menu-menu-footer-links li.last { border:none; }
+#block-menu-menu-footer-links a {  }
+#footer #locations { display:inline-block; margin-left:20px; }
+#footer .logo-25 { position: absolute; right: 0; top:0;  }
+
+.block.block-nice_menus, .block.block-nice_menus.block.with-block-editing { position:absolute; bottom:0; left:20px; margin:0 0 1em 0; }
+.block-nice_menus ul { margin:0; padding:0; }
+ul.nice-menu-down li, ul.nice-menu-down li.menuparent, ul.nice-menu-down li li.menuparent { background-color:#953635; background-image:none; margin-right:4px;
+	min-width:172px; height:25px; border-top:4px #953635 solid; border-bottom:3px #000 solid;   }
+ul.nice-menu-down li.last { margin-right:0px; }
+ul.nice-menu-down .menuparent a { padding-right:4px; }
+ul.nice-menu-down li.menuparent:hover { background:none; background-image:url(../images/top_submenu_bk.png); background-repeat:repeat; border-top: 4px #953635 solid; border-bottom:none;  height:28px; }
+/* ul.nice-menu-down li.menuparent:hover { background-color:#434242; border-top: 4px #953635 solid; border-bottom:3px #434242 solid;  background-image:none; } */
+ul.nice-menu-down li.menu-path-contact:hover  { background-color:#434242; border-top: 4px #ff1a1a solid; }
+ul.nice-menu-down li li { min-width:100px; }
+/*
+ul.nice-menu ul, #header-region ul.nice-menu ul { visibility: visible; }
+ul.nice-menu li.active-trail ul { left:0px; }
+ul.nice-menu ul  { position:absolute; left:-999em;  }
+ul.nice-menu li { border:none; position:relative; }
+*/
+ul.nice-menu ul { position:absolute; left:0px; width:100%;  border-top:none; top:32px;   }
+ul.nice-menu li { border-left:none; border-right:none; position:static; }
+ul.nice-menu li a { color:#fff; text-decoration:none; text-transform:uppercase; padding:2px 8px 5px 8px;  }
+ul.nice-menu ul li { width: auto; white-space:nowrap; border:none; background:none; padding:2px 8px 5px 8px;  }
+ul.nice-menu ul li:hover {  }
+ul.nice-menu ul li a { text-transform:none; color:#fff; padding:1px 4px; display:inline-block;  }
+ul.nice-menu ul li a:hover { color:#fff; background-color:#953635; }
+ul.nice-menu ul table { width:auto; margin:0px; padding:0px; 
+	background-image:url(../images/top_submenu_bk.png); width:100%;  }
+ul.nice-menu ul table tbody { background:none; }
+ul.nice-menu ul td { vertical-align:top; }
+ul.nice-menu li.menu-path-node-1292 ul table td { float:right; width:172px; }
+/* HOME PAGE */
+.front #main-wrapper { margin-top:0px; }
+.container { position:relative; width:939px;  color:#fff; position:relative; height:536px;  }
+.container p { margin:0px; }
+#leftnav { position:absolute; width:159px; top:0px; left:0px; }
+#rightnav { position:absolute; width:159px; right:0px; top:0px; }
+#middle { position:absolute; width:613px; left:163px; top:0px;  height:536px; background-image:url(../images/intro_main.jpg); overflow:hidden;  }
+#middle.complete { background-image:none; }
+#introtext { position:absolute; height:386px; width:593px; border:0px #fff solid; top:75px; left:15px;  }
+#introtext #line1, #introtext #line2 { margin:15px 0px; }
+.introblock  { position:relative; width:auto; font-size:44px; top:0px; display:none; line-height:44px; }
+#t11 { left:30px; top:0px; position:absolute;   }
+#t12 { left:265px; top: 55px; position:absolute; }
+#t13 { right:30px; top:110px; position:absolute; }
+#t21 { left:30px; top:165px; position:absolute; }
+#t22 { right:30px; top:220px; position:absolute;}
+#t23 { left:100px; top:275px;  position:absolute; }
+.industry-nav { width:159px; height:104px; position:relative; margin-bottom:4px; border:0px #fff solid; }
+.industry-nav .title { position:absolute; top:0px; left:0px; width:100%; text-transform:uppercase; opacity:1;  -moz-opacity:1; z-index:2;
+	cursor:pointer; font-size:14px; font-family: BellGothic-Bold;  }
+.industry-nav.active .title { background-color:#953635;  }
+.industry-nav .title span, .industry-nav .title a, .industry-nav a .title { padding:3px 6px; display:inline-block; color:#fff; text-decoration:none; }
+.industry-nav a { text-decoration:none; }
+.industry-nav a .title { width:147px; text-decoration:none; }
+.industry-nav img { position:absolute; opacity:.4;  -moz-opacity:.4; -webkit-opacity:.4; filter: alpha(opacity=40); }
+.industry-nav.active img { opacity:1; -moz-opacity:1;  -webkit-opacity:1; filter: alpha(opacity=100); }
+.industry-main { position:absolute; left:0px; top:0px; height:426px; width:613px; display:none;   }
+.industry-main .description { position:absolute; bottom:20px; right:26px; width:300px; padding:15px 15px; background-image:url(../images/industry-main-bk.png); font-size:1.1em; }
+.industry-main .description ul { margin:0px;  }
+.industry-main .description a { color:#fff; text-decoration:none; }
+.industry-main .description a span { color:#9A2832; font-family:BellGothic-Black; display:inline-block; float:right; margin-top:-20px; }
+.industry-main.active { display:block; }
+.industry-main .image { height:428px; width:613px; }
+.front h1.title { display:none; }
+
+/* media query for home page if browser size is 1024 or less */
+@media only screen and (max-height: 768px) {
+	.container, #middle { height:386px; overflow:hidden; }
+	.industry-nav { height:74px; overflow:hidden; }
+	.industry-nav img {  }
+	.industry-main { height:308px; overflow:hidden; }
+	#introtext { top:30px; }
+
+}
+
+/* admin area */
+.section-admin #content-area table a, .section-admin #content-area #views-ajax-pad form a {  }
+.section-admin .pager a, .pager li a.active { }
+
+.views_slideshow_thumbnailhover_div_breakout_teaser {width:75px;float:left; margin-right:6px;}
+#block-views-project_gallery-block_1 {float:left;  }
+.views_slideshow_thumbnailhover_div_breakout_teaser img { -moz-opacity:0.7; -webkit-opacity:0.7; opacity:.5; filter: alpha(opacity=70); }
+.activeSlide.views_slideshow_thumbnailhover_div_breakout_teaser img { -moz-opacity:1; -webkit-opacity:1; opacity:1; filter: alpha(opacity=100); }
+
+/* industry clients block */
+#block-views-industry_clients-block_1 .views-field-title, #block-views-project_gallery-block_1 .views-field-title { margin-right:20px; }
+#block-views-industry_clients-block_1 h2.title { font-size:1.2em; font-weight:normal;  }
+#block-menu-menu-industry-segments {margin-top:40px;}
+.node-type-clients.section-industry #content-area { margin-left:425px; padding-top:2em; }
+.node-type-clients.section-industry #content h1 {  float: left;  font-weight: normal; margin-left: 425px; margin-right: -760px; font-size:1.5em; }
+.region-content-bottom .view-industry-clients tbody {  }
+.region-content-bottom .view-industry-clients tbody a { text-decoration:underline;  }
+/* .region-content-bottom .view-industry-clients tbody a:hover { background-color:#953635; text-decoration:none;  } */
+.region-content-bottom .view-industry-clients .col-3 td { width:33%; vertical-align:top; }
+/* left sidebar menu */
+#block-menu_block-3 ul { margin: 0px; padding: 0px; }
+#block-menu_block-3 li { margin: 0px 0px 5px 0px; padding: 0px; }
+#block-menu_block-3 li ul, #block-menu_block-3 li.active-trail.active ul { display: none; margin-left:15px; }
+#block-menu_block-3 li.active-trail ul { display: block;  }
+#block-menu_block-3 li a { text-decoration: none; color: #953635; }
+#block-menu_block-3 li a:hover { color: #5C5C5C;  }
+#block-menu_block-3 li a.active-trail, #block-menu_block-3 li a.active { font-family:BellGothic-black; font-size:.9em;   }
+
+.region-sidebar-first .view-bio-display h3 { font-size: 1em; font-family:BellGothic-Bold; margin-bottom:0px; font-weight:normal; }
+.region-sidebar-first .view-bio-display .mtnav { color:#953635; }
+.region-sidebar-first .view-bio-display .mtnav:hover {  }
+#content-area .view-bio-display { min-height:621px; }
+.mtdesc.views-row { display:none; }
+.mtdesc.active { display:block; }
+.mtdesc .photo { margin-bottom:10px; }
+.mtdesc .name { font-size:1.2em; }
+.mtnav { cursor:pointer; }
+
+.field-field-client-quote { font-family:BellGothic-Italic; border-top:1px #fff solid; padding-top:1em;  }
+.field-field-client-quote-attribute { text-align:right; }
+
+/* contact page */
+#contact-addresses { height:160px; position:relative; margin-top:20px; }
+#contact-addresses div { position:absolute; top:0px; }
+#contact-addresses div.col2 { left:200px; }
+#contact-addresses div.col3 { left:400px; }
+#contact-addresses div.col4 { left:600px; }
+.office { margin-left:200px; margin-bottom:40px; }
+.office img { margin-left:-200px; float:left; padding-bottom:40px; }
+
+
+/* news, careers - employment opp list */
+.view-dpm-news  .views-field-title, .view-employment-list .views-field-title { font-size:1.3em; text-transform:uppercase; margin-bottom:7px;   }
+.view-dpm-news .views-row, .view-employment-list .views-row { margin-top:20px; padding-bottom:20px; border-bottom:1px #5C5C5C solid; }
+.view-dpm-news .views-field-field-news-file-fid a { color:#fff; background-color:#953635; padding:2px 4px; text-decoration:none; }
+.view-employment-list p { margin:0px 0px 10px 0px; }
+.view-employment-list .views-field-field-employment-location-value { margin-bottom:10px; }
+
+/* admin content form styles */
+.node-form tr.even a, .node-form tr.odd a { color:#000; }
+
+/* respository page styles */
+#block-views-repository_page_list-block_2 .views-field-name a, #block-views-repository_categories-block_1 .views-field-name a
+	 { display:inline-block; padding-left:30px; background-image:url(../images/folder.png); background-repeat:no-repeat; height:18px;  }
+
+/* page image sidebar block */
+.region-sidebar-first .view-page-image img { width:170px; height:auto; }
+

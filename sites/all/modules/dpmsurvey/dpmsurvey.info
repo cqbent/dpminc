@@ -1,0 +1,5 @@
+; $Id: $
+name = DPM Survey Module
+description = Create and manage surveys, create survey reports
+core = 6.x
+package = "DPM Survey"
